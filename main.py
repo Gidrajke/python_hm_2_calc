@@ -45,7 +45,7 @@ class Calculator:
                     result_stack.append(a * b)
                 elif token == '/':
                     if b == 0:
-                        raise ZeroDivisionError
+                        return None
                     result_stack.append(a / b)
 
         return result_stack[0]
@@ -58,7 +58,10 @@ def handle_calculation():
     if expression:
         calc = Calculator()
         result = calc.evaluate_expression(expression)
-        return jsonify({'result': str(result)})
+        if result is not None:
+            return jsonify({'result': str(result)})
+        else:
+            return jsonify({'error': 'Нельзя делить на 0'})
     else:
         return jsonify({'error': 'Не указано математическое выражение'})
 
